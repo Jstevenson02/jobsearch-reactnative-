@@ -35,6 +35,31 @@ const JobDeatils = () => {
 
   const onRefresh = () => {};
 
+  const displayTabContent = () => {
+    switch (activeTab) {
+      case "Qualifications":
+        return (
+          <Specifics
+            title="Qualifications"
+            points={data[0].job_higlights?.Qualifications ?? ["N/A"]}
+          />
+        );
+      case "About":
+        return (
+          <JobAbout info={data[0].job_description ?? "No Data Provided."} />
+        );
+      case "Responsibilities":
+        return (
+          <Specifics
+            title="Responsibilities"
+            points={data[0].job_higlights?.Responsibilities ?? ["N/A"]}
+          />
+        );
+      default:
+        break;
+    }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <Stack.Screen
@@ -81,9 +106,16 @@ const JobDeatils = () => {
                 activeTab={activeTab}
                 setActiveTab={setActiveTab}
               />
+              {displayTabContent()}
             </View>
           )}
         </ScrollView>
+        <JobFooter
+          url={
+            data[0]?.job_google_link ??
+            "https://careers.google.com/jobs/results"
+          }
+        />
       </>
     </SafeAreaView>
   );
